@@ -1,0 +1,47 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'br.com.quintoandar'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+wrapper {
+    gradleVersion = '4.10.2'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+ext['springCloudVersion'] = 'Greenwich.M3'
+
+dependencies {
+    implementation('org.springframework.cloud:spring-cloud-gcp-starter-pubsub')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    compile("org.springframework.boot:spring-boot-devtools")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
